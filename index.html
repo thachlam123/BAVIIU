@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Anh Em Ba Vì — 3D Motion Experience</title>
+  <meta name="description" content="Website trải nghiệm hình ảnh, video và nhạc nền của Anh Em Ba Vì với WebGL, hiệu ứng cuộn, cursor trail và chuyển động điện ảnh." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <noscript>Trang này cần bật JavaScript để chạy WebGL, hiệu ứng cuộn và nhạc nền.</noscript>
+  <audio id="soundtrack" preload="auto" loop playsinline aria-hidden="true"><source src="assets/soundtrack.mp3" type="audio/mpeg"></audio>
+
+  <div class="preloader" aria-label="experience gate">
+    <div class="gate-grid"></div>
+    <div class="gate-card">
+      <p class="mono eyebrow">BA VÌ / KÝ ỨC / HÀNH TRÌNH</p>
+      <h2 class="gate-title">ANH EM BA VÌ</h2>
+      <p class="gate-copy">Chào mừng bạn đến với không gian trải nghiệm số của Anh Em Ba Vì. Nhạc nền sẽ tự động phát sau khi bạn nhấn nút tham gia.</p>
+      <div class="gate-actions">
+        <button id="enterBtn" class="magnetic">KHÁM PHÁ NGAY • BẬT NHẠC</button>
+        <button id="skipBtn">VÀO KHÔNG NHẠC</button>
+      </div>
+    </div>
+  </div>
+
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scan" aria-hidden="true"></div>
+  <div class="shock" aria-hidden="true"></div>
+  <div id="progress" aria-hidden="true"></div>
+  <div id="audioHint" class="audio-hint">Bấm vào màn hình để bật nhạc nền</div>
+
+  <div id="cursor" aria-hidden="true"><span id="cursorLabel">XEM</span></div>
+
+  <header class="topbar">
+    <a class="brand" href="#hero" aria-label="Trang chủ">
+      <span class="brand-dot"></span>
+      <span>AE<br>BV</span>
+    </a>
+    <div class="nav-wrap">
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#scene-1" class="active">TRANG CHÍNH</a>
+        <a href="#gallery">HÌNH / VIDEO</a>
+        <a href="#ai">TÌM NHANH</a>
+        <a href="#contact">LIÊN HỆ</a>
+      </nav>
+    </div>
+    <button id="soundToggle" class="sound">NHẠC: TẮT</button>
+  </header>
+
+  <main id="hero">
+    <section class="hero scene-hero">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">HÀNH TRÌNH KHÁM PHÁ</p>
+        <h1 class="split reveal">HÀNH TRÌNH BA VÌ</h1>
+        <p class="hero-sub reveal">Khám phá vẻ đẹp hùng vĩ của Ba Vì qua không gian trải nghiệm 3D sống động. Từng thước phim và hình ảnh được dệt nên từ cảm hứng thiên nhiên và tinh thần tự do.</p>
+      </div>
+      <form id="aiForm" class="ai-bar reveal" autocomplete="off" style="width: 100%; max-width: 500px;">
+        <label for="aiInput">KHÁM PHÁ THEO CẢM XỨC</label>
+        <input id="aiInput" placeholder="Gõ: video, ảnh, đêm, liên hệ..." />
+        <button>KHÁM PHÁ</button>
+        <small id="aiReply">Tìm kiếm những khoảnh khắc bạn yêu thích nhất.</small>
+      </form>
+      <div class="hero-meter" aria-hidden="true">
+        <span>CUỘN</span><i></i><b></b>
+      </div>
+    </section>
+
+    <div id="work"></div>
+
+    <section id="gallery" class="gallery-section">
+      <div class="section-head reveal">
+        <p class="eyebrow">THƯ VIỆN HÌNH ẢNH / VIDEO</p>
+        <h2 class="split">KHOẢNH KHẮC <br>Ở BA VÌ</h2>
+        <p>Toàn bộ hình ảnh và video từ hành trình của chúng tôi được lưu giữ tại đây. Hãy di chuột để cảm nhận hiệu ứng và nhấn vào để xem chi tiết.</p>
+      </div>
+      <div id="galleryGrid" class="gallery-grid"></div>
+    </section>
+
+    <section id="ai" class="terminal-section">
+      <div class="terminal reveal">
+        <p class="mono">NHỊP THỞ NÚI RỪNG</p>
+        <h2 class="split">CẢM NHẬN SỰ KHÁC BIỆT</h2>
+        <p>Không chỉ là một chuyến đi, đây là sự giao thoa giữa tâm hồn và cảnh vật. Mỗi trải nghiệm tại Ba Vì mang đến một nguồn năng lượng mới, đánh thức mọi giác quan của người lữ hành.</p>
+        <div class="terminal-grid">
+          <span>TỰ NHIÊN</span><span>NGUYÊN SƠ</span>
+          <span>ĐỒNG ĐỘI</span><span>GẮN KẾT</span>
+          <span>CẢM XỨC</span><span>TRỌN VẸN</span>
+          <span>MEDIA</span><span>SỐNG ĐỘNG</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <div class="contact-card reveal">
+        <p class="eyebrow">TRỞ THÀNH MỘT PHẦN CỦA CHÚNG TÔI</p>
+        <h2 class="split">VIẾT TIẾP HÀNH TRÌNH<br>BA VÌ HÙNG VĨ</h2>
+        <p>Chúng tôi luôn chào đón những trái tim yêu tự do, yêu thiên nhiên và mong muốn lan tỏa vẻ đẹp của con người Việt Nam.</p>
+        <a class="cta magnetic" href="#hero">KHỞI ĐẦU HÀNH TRÌNH</a>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-panel">
+      <button id="closeModal" aria-label="Đóng">×</button>
+      <div id="modalMedia" class="modal-media"></div>
+      <h3 id="modalTitle">XEM MEDIA</h3>
+      <p>Bấm ra ngoài hoặc bấm × để đóng.</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
