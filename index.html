@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>Anh Em Ba Vì — 3D Motion Experience</title>
   <meta name="description" content="Website trải nghiệm hình ảnh, video và nhạc nền của Anh Em Ba Vì với WebGL, hiệu ứng cuộn, cursor trail và chuyển động điện ảnh." />
   <link rel="stylesheet" href="style.css" />
@@ -32,16 +34,17 @@
   <div id="progress" aria-hidden="true"></div>
   <div id="audioHint" class="audio-hint">Bấm vào màn hình để bật nhạc nền</div>
 
-  <div id="cursor" aria-hidden="true"><span id="cursorLabel">XEM</span></div>
+  <div id="cursor" class="desktop-only" aria-hidden="true"><span id="cursorLabel">XEM</span></div>
 
   <header class="topbar">
     <a class="brand" href="#hero" aria-label="Trang chủ">
       <span class="brand-dot"></span>
       <span>AE<br>BV</span>
     </a>
-    <div class="nav-wrap">
+    <button id="menuToggle" class="menu-toggle" aria-label="Mở menu"><span></span></button>
+    <div id="navWrap" class="nav-wrap">
       <nav class="nav" aria-label="Main navigation">
-        <a href="#scene-1" class="active">TRANG CHÍNH</a>
+        <a href="#hero" class="active">TRANG CHÍNH</a>
         <a href="#gallery">HÌNH / VIDEO</a>
         <a href="#ai">TÌM NHANH</a>
         <a href="#contact">LIÊN HỆ</a>
